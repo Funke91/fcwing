@@ -22,14 +22,30 @@
 #***************************************************************************
 
 import FreeCAD, FreeCADGui, os
+import Draft
+import scale
+import sys
+from PyQt4 import QtGui,QtCore 
+import Airfoil
 
-class CreateWing: 
-    def Activated(self):
-        pass
-    def GetResources(self):
-        #IconPath = Paths.iconsPath() + "/Ico.png"
-        MenuText = str('Create a new wing')
-        ToolTip  = str('Create a new wing')
-        return {'MenuText': MenuText, 'ToolTip': ToolTip} 
+class MakeAirfoil:
+	def Activated(self):
+		sel = Draft.getSelection()[0]
+		Wire = 0
+		try:
+			Wire = sel.Shape.Wires[0]
+		except Exception, e:
+			return
+		Airfoil.makeAirfoil(Wire)
+	def IsActive(self):
+		if(len(Draft.getSelection())==1):
+			return True
+		else:
+			return False
+	def GetResources(self):
+		#IconPath = Paths.iconsPath() + "/Ico.png"
+		MenuText = str('Create Airfoil')
+		ToolTip  = str('Create an Airfoil, from any Wired Object')
+		return {'MenuText': MenuText, 'ToolTip': ToolTip}
         
-FreeCADGui.addCommand('Wing_CreateWing', CreateWing())
+FreeCADGui.addCommand('Wing_MakeAirfoil', MakeAirfoil())

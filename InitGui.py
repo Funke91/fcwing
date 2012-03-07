@@ -23,14 +23,14 @@
 
 class WingWorkbench ( Workbench ):
     """ @brief Workbench of Wing design module. Here toolbars & icons are append. """
-    import PlaneGui
+    import WingGui
     
     #Icon = Paths.iconsPath() + "/Ico.png"
     MenuText = str("Wing design")
     ToolTip = str("Wing design")
 
     def Initialize(self):
-        list = ["Wing_CreateWing"]
+        list = ["Wing_MakeAirfoil"]
         
         # ToolBar
         self.appendToolbar("Wing design",list)
