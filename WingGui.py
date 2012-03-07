@@ -28,10 +28,15 @@ import sys
 from PyQt4 import QtGui,QtCore 
 import Airfoil
 
+mw = QtGui.qApp.activeWindow()
+
 class MakeAirfoil:
 	def Activated(self):
 		sel = Draft.getSelection()[0]
 		Wire = 0
+		if(sel.Type != 'Part::Part2DObjectPython' and sel.Type != 'Part::FeaturePython'):
+			QtGui.QMessageBox.critical(mw,"Invalid Selection", "You must select 'Part::Part2DObjectPython'",QtGui.QMessageBox.Ok)
+			return
 		try:
 			Wire = sel.Shape.Wires[0]
 		except Exception, e:
